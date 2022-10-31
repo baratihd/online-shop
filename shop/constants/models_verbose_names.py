@@ -1,0 +1,11 @@
+PARENT = ""
+
+CATEGORY = "دسته بندی"
+REFERENCE_NUMBER = "کدپیگیری"
+TITLE = "نام کالا"
+DESCRIPTION = "توضیحات"
+NUMBER_OF_SALES = "تعداد فروخته شده"
+PRICE = "قیمت"
+INVENTORY = "موجودی انبار"
+CREATED_AT = "تاریخ ایجاد"
+CREATED_BY = "ایجاد کننده"
