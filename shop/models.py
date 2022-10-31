@@ -29,13 +29,22 @@ class CategoryModel(models.Model):
         verbose_name=models_verbose_names.CREATED_AT
     )
 
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        # prevent a category to be itself parent
+        if self.id and self.parent and self.id == self.parent.id:
+            self.parent = None
+        super().save(*args, **kwargs)
+
 
 class ProductModel(models.Model):
 
     @staticmethod
     def create_new_ref_number():
         """
-        Generate a unique 10-digit random number
+        Generate a random unique of 10-digit number
         """
         return str(random.randint(1000000000, 9999999999))
 
@@ -60,15 +69,9 @@ class ProductModel(models.Model):
         blank=True,
         verbose_name=models_verbose_names.DESCRIPTION
     )
-    number_of_sales = models.IntegerField(
-        verbose_name=models_verbose_names.NUMBER_OF_SALES
-    )
-    price = models.BigIntegerField(
-        verbose_name=models_verbose_names.PRICE
-    )
-    inventory = models.IntegerField(
-        verbose_name=models_verbose_names.INVENTORY
-    )
+    number_of_sales = models.IntegerField(verbose_name=models_verbose_names.NUMBER_OF_SALES)
+    price = models.BigIntegerField(verbose_name=models_verbose_names.PRICE)
+    inventory = models.IntegerField(verbose_name=models_verbose_names.INVENTORY)
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name=models_verbose_names.CREATED_AT
@@ -79,3 +82,5 @@ class ProductModel(models.Model):
         verbose_name=models_verbose_names.CREATED_BY
     )
 
+    def __str__(self):
+        return str(self.reference_number)
