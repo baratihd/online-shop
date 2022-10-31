@@ -1,6 +1,14 @@
+import random
+
 from django.db import models
+from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 from .constants import models_verbose_names
+
+
+User = get_user_model()
+random.seed(timezone.now())
 
 
 class CategoryModel(models.Model):
@@ -20,3 +28,54 @@ class CategoryModel(models.Model):
         auto_now_add=True,
         verbose_name=models_verbose_names.CREATED_AT
     )
+
+
+class ProductModel(models.Model):
+
+    @staticmethod
+    def create_new_ref_number():
+        """
+        Generate a unique 10-digit random number
+        """
+        return str(random.randint(1000000000, 9999999999))
+
+    category = models.ForeignKey(
+        'shop.CategoryModel',
+        on_delete=models.CASCADE,
+        verbose_name=models_verbose_names.CATEGORY
+    )
+    reference_number = models.CharField(
+        max_length=10,
+        editable=False,
+        unique=True,
+        default=create_new_ref_number,
+        verbose_name=models_verbose_names.REFERENCE_NUMBER
+    )
+    title = models.CharField(
+        max_length=100,
+        verbose_name=models_verbose_names.TITLE
+    )
+    description = models.TextField(
+        max_length=1000,
+        blank=True,
+        verbose_name=models_verbose_names.DESCRIPTION
+    )
+    number_of_sales = models.IntegerField(
+        verbose_name=models_verbose_names.NUMBER_OF_SALES
+    )
+    price = models.BigIntegerField(
+        verbose_name=models_verbose_names.PRICE
+    )
+    inventory = models.IntegerField(
+        verbose_name=models_verbose_names.INVENTORY
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=models_verbose_names.CREATED_AT
+    )
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name=models_verbose_names.CREATED_BY
+    )
+
