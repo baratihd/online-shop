@@ -36,10 +36,10 @@ class ProductListAPIView(ListAPIView):
     This API can return list of products.
     It can filter by date range of create products
     with `created_at` key. And also it filter
-    range of prices.
+    range of prices. \n
     User can set size of pagination by `size` key
-    in query params.
-    ?size=10
+    in query params. \n
+    ?size=10 \n
     Maximum number of products for admin users
     is 1000 and for other users is 100.
     """
@@ -64,7 +64,7 @@ class ProductListAPIView(ListAPIView):
 
 class RemoveUnsoldProducts(APIView):
     """
-    This API can remove product which it has not been sold yet.
+    This API can remove product which it has not been sold yet. \n
     Tips: Only superuser or product owner can execute this API.
     """
     permission_classes = (IsAdminOwnerOrReadOnly, )

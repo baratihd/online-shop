@@ -6,7 +6,7 @@ from .tasks import add_product_send_email
 
 
 @receiver(post_save, sender=ProductModel)
-def send_email_after_create_product(sender, instance, created, *args, **kwargs):
+def send_email_after_create_product(sender, instance, created, **kwargs):
     if created:
         add_product_send_email(instance)
     return None
