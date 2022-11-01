@@ -1,12 +1,19 @@
+from django.shortcuts import get_object_or_404
+
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    DestroyAPIView,
+)
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
+from index.permissions import IsAdminOwnerOrReadOnly
 from .models import ProductModel
 from .serializer import ProductModelSerializer
 from .constants import messages_constants
@@ -32,8 +39,8 @@ class ProductListAPIView(ListAPIView):
     pagination_class = CustomPageNumberPagination
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filterset_fields = {
-        'created_at': ['let', 'gte'],
-        'price': ['let', 'gte'],
+        'created_at': ['lte', 'gte'],
+        'price': ['lte', 'gte'],
     }
     search_fields = ('id', 'reference_number', 'category__title', 'title')
 
@@ -46,12 +53,11 @@ class ProductListAPIView(ListAPIView):
 
 
 class RemoveUnsoldProducts(APIView):
-    permission_classes = (IsAdminUser, )
+    permission_classes = (IsAdminOwnerOrReadOnly, )
+    lookup_field = 'reference_number'
 
-    def post(self, request):
-        number_of_unsold_product = ProductModel.objects.filter(number_of_sales=0).delete()
-        if number_of_unsold_product:
-            return Response(
-                messages_constants.REMOVE_PRODUCTS_WHICH_HAS_NOT_SOLD_YET % number_of_unsold_product,
-                status=status.HTTP_200_OK
-            )
+    def delete(self, request, reference_number):
+        instance = get_object_or_404(ProductModel, number_of_sales=0, reference_number=reference_number)
+        self.check_object_permissions(request, instance)
+        instance.delete()
+        return Response(messages_constants.PRODUCT_REMOVED, status=status.HTTP_204_NO_CONTENT)
