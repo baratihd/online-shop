@@ -1,3 +1,5 @@
+from django.db.models import Q
+
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView
@@ -27,10 +29,14 @@ class ProductListAPIView(ListAPIView):
     permission_classes = (AllowAny, )
     queryset = ProductModel.objects.all()
     serializer_class = ProductModelSerializer
+    pagination_class = CustomPageNumberPagination
 
-    def get_paginated_response(self, data):
-        print(data)
-        return super().get_paginated_response(data)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        is_admin = user.is_staff or user.is_superuser
+        number_of_objects = 1001 if is_admin else 101
+        return queryset[:number_of_objects]
 
 
 class RemoveUnsoldProducts(APIView):

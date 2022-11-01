@@ -3,8 +3,9 @@ import random
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
-from .constants import models_verbose_names
+from .constants import models_verbose_names, messages_constants
 
 
 User = get_user_model()
@@ -58,7 +59,7 @@ class ProductModel(models.Model):
         max_length=10,
         editable=False,
         unique=True,
-        default=create_new_ref_number(),
+        default=create_new_ref_number,
         verbose_name=models_verbose_names.REFERENCE_NUMBER
     )
     title = models.CharField(
@@ -96,3 +97,10 @@ class ProductModel(models.Model):
 
     def __str__(self):
         return str(self.reference_number)
+
+    def clean(self):
+        print()
+        has_not_permission_to_create_product = not (self.created_by.is_staff or self.created_by.is_superuser)
+        if has_not_permission_to_create_product:
+            raise ValidationError(messages_constants.THIS_USER_HAS_NOT_PERMISSION_TO_CREATE_PRODUCT)
+        return super().clean()
