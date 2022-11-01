@@ -39,8 +39,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # Third-party apps
     'rest_framework',
+
     # Local apps
     'shop.apps.ShopConfig',
+    'accounts.apps.AccountsConfig',
 )
 
 MIDDLEWARE = (
@@ -104,3 +106,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
