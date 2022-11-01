@@ -18,7 +18,6 @@ class CategoryModel(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        verbose_name=models_verbose_names.PARENT
     )
     title = models.CharField(
         max_length=70,

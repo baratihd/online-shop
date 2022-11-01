@@ -1,5 +1,3 @@
-PARENT = ""
-
 CATEGORY = "دسته بندی"
 REFERENCE_NUMBER = "کدپیگیری"
 TITLE = "نام کالا"
