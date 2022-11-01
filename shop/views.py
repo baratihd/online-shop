@@ -19,6 +19,10 @@ from .constants import messages_constants
 
 
 class ProductCreateAPIView(CreateAPIView):
+    """
+    This view can create a product by admin user.
+    It set product creator automatically.
+    """
     serializer_class = ProductModelSerializer
     permission_classes = (IsAdminUser, )
 
@@ -28,6 +32,17 @@ class ProductCreateAPIView(CreateAPIView):
 
 
 class ProductListAPIView(ListAPIView):
+    """
+    This API can return list of products.
+    It can filter by date range of create products
+    with `created_at` key. And also it filter
+    range of prices.
+    User can set size of pagination by `size` key
+    in query params.
+    ?size=10
+    Maximum number of products for admin users
+    is 1000 and for other users is 100.
+    """
     permission_classes = (AllowAny, )
     queryset = ProductModel.objects.all()
     serializer_class = ProductModelSerializer
@@ -48,6 +63,10 @@ class ProductListAPIView(ListAPIView):
 
 
 class RemoveUnsoldProducts(APIView):
+    """
+    This API can remove product which it has not been sold yet.
+    Tips: Only superuser or product owner can execute this API.
+    """
     permission_classes = (IsAdminOwnerOrReadOnly, )
     lookup_field = 'reference_number'
 
