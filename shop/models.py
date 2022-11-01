@@ -46,9 +46,7 @@ class ProductModel(models.Model):
 
     @staticmethod
     def create_new_ref_number():
-        """
-        Generate a random unique of 10-digit number
-        """
+        """ Generate a random unique of 10-digit number """
         return str(random.randint(1000000000, 9999999999))
 
     category = models.ForeignKey(
@@ -60,7 +58,7 @@ class ProductModel(models.Model):
         max_length=10,
         editable=False,
         unique=True,
-        default=create_new_ref_number,
+        default=create_new_ref_number(),
         verbose_name=models_verbose_names.REFERENCE_NUMBER
     )
     title = models.CharField(
@@ -72,9 +70,16 @@ class ProductModel(models.Model):
         blank=True,
         verbose_name=models_verbose_names.DESCRIPTION
     )
-    number_of_sales = models.IntegerField(verbose_name=models_verbose_names.NUMBER_OF_SALES)
-    price = models.BigIntegerField(verbose_name=models_verbose_names.PRICE)
-    inventory = models.IntegerField(verbose_name=models_verbose_names.INVENTORY)
+    number_of_sales = models.IntegerField(
+        default=0,
+        verbose_name=models_verbose_names.NUMBER_OF_SALES
+    )
+    price = models.BigIntegerField(
+        verbose_name=models_verbose_names.PRICE
+    )
+    inventory = models.IntegerField(
+        verbose_name=models_verbose_names.INVENTORY
+    )
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name=models_verbose_names.CREATED_AT
