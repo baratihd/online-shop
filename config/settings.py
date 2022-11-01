@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     # Third-party apps
     'rest_framework',
     'django_filters',
+    'drf_spectacular',
     # Local apps
     'shop.apps.ShopConfig',
     'accounts.apps.AccountsConfig',
@@ -117,6 +118,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 6,
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # JWT configuration
@@ -150,4 +152,10 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Shop',
+    'DESCRIPTION': 'This is the test project for RighTel',
+    'VERSION': '1.0.0',
 }
