@@ -1,4 +1,7 @@
+PRODUCT = "محصول"
+PRODUCTS = "محصولات"
 CATEGORY = "دسته بندی"
+CATEGORIES = "دسته بندی ها"
 REFERENCE_NUMBER = "کدپیگیری"
 TITLE = "نام کالا"
 DESCRIPTION = "توضیحات"

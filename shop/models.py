@@ -28,6 +28,10 @@ class CategoryModel(models.Model):
         verbose_name=models_verbose_names.CREATED_AT
     )
 
+    class Meta:
+        verbose_name = models_verbose_names.CATEGORY
+        verbose_name_plural = models_verbose_names.CATEGORIES
+
     def __str__(self):
         return self.title
 
@@ -80,6 +84,10 @@ class ProductModel(models.Model):
         on_delete=models.CASCADE,
         verbose_name=models_verbose_names.CREATED_BY
     )
+
+    class Meta:
+        verbose_name = models_verbose_names.PRODUCT
+        verbose_name_plural = models_verbose_names.PRODUCTS
 
     def __str__(self):
         return str(self.reference_number)
