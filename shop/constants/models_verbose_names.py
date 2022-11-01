@@ -1,0 +1,13 @@
+CATEGORY = "دسته بندی"
+CATEGORIES = "دسته بندی ها"
+
+PRODUCT = "محصول"
+PRODUCTS = "محصولات"
+REFERENCE_NUMBER = "کدپیگیری"
+TITLE = "عنوان"
+DESCRIPTION = "توضیحات"
+NUMBER_OF_SALES = "تعداد فروخته شده"
+PRICE = "قیمت (تومان)"
+INVENTORY = "موجودی انبار"
+CREATED_AT = "تاریخ ایجاد"
+CREATED_BY = "ایجاد کننده"
