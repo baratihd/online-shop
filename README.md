@@ -20,7 +20,7 @@ pip install -r requirements.txt
 
 ## Complete .env file
 Due to the sensitive parts of the settings, I moved them to a protected file.\
-To edit it, you need to create a file named `.env` in the root of the program.
+To edit it, you need to create a file named `.env` in the root of the program.\
 And move all the contents of the `.env-example` file to `.env`.
 Then complete the `.env` file with your information.
 ```
