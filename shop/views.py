@@ -5,22 +5,17 @@ from rest_framework.views import APIView
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
-    DestroyAPIView,
 )
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 from index.permissions import IsAdminOwnerOrReadOnly
+from index.paginations import CustomPageNumberPagination
 from .models import ProductModel
 from .serializer import ProductModelSerializer
 from .constants import messages_constants
-
-
-class CustomPageNumberPagination(PageNumberPagination):
-    page_size_query_param = 'size'
 
 
 class ProductCreateAPIView(CreateAPIView):

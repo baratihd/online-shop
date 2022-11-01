@@ -22,4 +22,5 @@ class ProductModelSerializer(serializers.ModelSerializer):
             'id',
             'reference_number',
             'created_at',
+            'created_by'
         )
