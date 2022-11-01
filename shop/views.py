@@ -1,11 +1,10 @@
-from django.db.models import Q
-
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import ProductModel
 from .serializer import ProductModelSerializer
@@ -30,6 +29,13 @@ class ProductListAPIView(ListAPIView):
     queryset = ProductModel.objects.all()
     serializer_class = ProductModelSerializer
     pagination_class = CustomPageNumberPagination
+    filter_backends = (DjangoFilterBackend, )
+    filterset_fields = {
+        'category__title': ['exact'],
+        'created_at': ['let', 'gte'],
+        'price': ['let', 'gte'],
+        'title': ['exact'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()
