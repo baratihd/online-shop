@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import IsAdminUser
 
-# Create your views here.
+from .serializer import ProductModelSerializer
+
+
+class ProductCreateAPIView(CreateAPIView):
+    serializer_class = ProductModelSerializer
+    permission_classes = (IsAdminUser, )
