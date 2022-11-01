@@ -4,6 +4,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import ProductModel
@@ -29,13 +30,12 @@ class ProductListAPIView(ListAPIView):
     queryset = ProductModel.objects.all()
     serializer_class = ProductModelSerializer
     pagination_class = CustomPageNumberPagination
-    filter_backends = (DjangoFilterBackend, )
+    filter_backends = (DjangoFilterBackend, SearchFilter)
     filterset_fields = {
-        'category__title': ['exact'],
         'created_at': ['let', 'gte'],
         'price': ['let', 'gte'],
-        'title': ['exact'],
     }
+    search_fields = ('id', 'reference_number', 'category__title', 'title')
 
     def get_queryset(self):
         queryset = super().get_queryset()
